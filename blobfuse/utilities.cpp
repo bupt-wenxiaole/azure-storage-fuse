@@ -171,6 +171,7 @@ int azs_getattr(const char *path, struct stat *stbuf)
     //AZS_DEBUGLOGV("Storage client name is %s \n", (typeid(storage_client).name()));
     // see if it is block blob and call the block blob method
     //if the first task is to study
+    #if 0
     if (!storage_client->isADLS())
     {
         int resultCount = 2;
@@ -293,8 +294,9 @@ int azs_getattr(const char *path, struct stat *stbuf)
         }
     } // end of processing for Blockblob
     else
+    #endif
     {
-        BfsFileProperty blob_property = storage_client->GetProperties(blobNameStr);
+        BfsFileProperty blob_property = storage_client->GetProperties(blobNameStr, true);
         mode_t perms = blob_property.m_file_mode == 0 ? config_options.defaultPermission : blob_property.m_file_mode;
 
         if ((errno == 0) && blob_property.isValid())
