@@ -365,6 +365,8 @@ int set_log_mask(const char * min_log_level_char, bool blobfuseInit)
     
     syslog(LOG_CRIT, "Setting logging level to : %s", min_log_level.c_str());
 
+    gEnableLogsHttp = false;
+
     // cmd_options for logging: LOG_OFF, LOG_CRIT, LOG_ERR, LOG_WARNING, LOG_INFO, LOG_DEBUG
     if (min_log_level == "LOG_OFF")
     {
@@ -388,11 +390,13 @@ int set_log_mask(const char * min_log_level_char, bool blobfuseInit)
     }
     if (min_log_level == "LOG_INFO")
     {
+        gEnableLogsHttp = true;
         setlogmask(LOG_UPTO(LOG_INFO));
         return 0;
     }
     if (min_log_level == "LOG_DEBUG")
     {
+        gEnableLogsHttp = true;
         setlogmask(LOG_UPTO(LOG_DEBUG));
         return 0;
     }
